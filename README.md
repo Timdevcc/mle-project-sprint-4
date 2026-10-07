@@ -73,8 +73,8 @@ wget https://storage.yandexcloud.net/mle-data/ym/interactions.parquet
 Необходимо запустить три сервиса:
 
 ```bash
-uvicorn event_service:app --host 0.0.0.0 --port 8010
-uvicorn feature_service:app --host 0.0.0.0 --port 8020
+uvicorn events_service:app --host 0.0.0.0 --port 8010
+uvicorn features_service:app --host 0.0.0.0 --port 8020
 uvicorn recommendations_service:app --host 0.0.0.0 --port 8000
 ```
 

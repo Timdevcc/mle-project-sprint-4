@@ -25,13 +25,17 @@ class Recommendations:
         """
         logger.info(f"Loading recommendations")
         try:
-            self._recs[type] = pd.read_parquet(path, **kwargs)
-            self._recs[type] = self._recs[type].set_index("user_id")
+            df = pd.read_parquet(path, **kwargs)
+            if type == "personal":
+                self._recs[type] = df.set_index("user_id")
+            elif type == "default":
+                self._recs[type] = df["item_id"].drop_duplicates().tolist()
         except FileNotFoundError:
             logger.critical(f"File not found: {path}")
             raise
         except Exception as e:
             logger.exception(f"Failed to load recommendations from {path}: {e}")
+            raise
         logger.info(f"Loaded")
 
     def get(self, user_id: int, k: int=100):
@@ -43,8 +47,7 @@ class Recommendations:
             recs = recs["item_id"].to_list()[:k]
             self._stats["request_personal_count"] += 1
         except KeyError:
-            recs = self._recs["default"]
-            recs = recs["item_id"].to_list()[:k]
+            recs = self._recs["default"][:k]
             self._stats["request_default_count"] += 1
         except:
             logger.error("No recommendations found")
