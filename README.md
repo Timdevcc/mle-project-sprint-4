@@ -15,6 +15,59 @@
 
 Итоговый список ограничивается параметром `k`.
 
+## Установка
+
+Клонировать репозиторий:
+
+```bash
+git clone https://github.com/Timdevcc/mle-project-sprint-4.git
+cd mle-project-sprint-4
+```
+
+Создать виртуальное окружение:
+
+```bash
+python3 -m venv .venv
+```
+
+Активировать виртуальное окружение:
+
+```bash
+source .venv/bin/activate
+```
+
+Установить необходимые зависимости:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Получение данных
+
+Файлы с рекомендациями:
+
+* `recommendations.parquet`
+* `personal_als.parquet`
+* `similar.parquet`
+* `top_popular.parquet`
+
+можно получить из S3-хранилища по пути:
+
+```text
+recsys/recommendations
+```
+S3-Bucket: s3-student-mle-20260702-1d35328110-freetrack  
+
+Либо скачать исходные данные для построения рекомендаций:
+
+```bash
+wget https://storage.yandexcloud.net/mle-data/ym/tracks.parquet
+wget https://storage.yandexcloud.net/mle-data/ym/catalog_names.parquet
+wget https://storage.yandexcloud.net/mle-data/ym/interactions.parquet
+```
+
+После скачивания исходных данных необходимо запустить ноутбук `recommendations.ipynb`, который формирует необходимые файлы с рекомендациями.
+
 ### Запуск
 
 Необходимо запустить три сервиса:
